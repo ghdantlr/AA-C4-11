@@ -104,4 +104,12 @@ public class Rental {
 
 	}
 
+	public RentalResult getRentalResult(){
+		int daysRented = getRented();
+		double charge = getCarge(daysRented);
+		int point = getPoint(daysRented);
+
+		return new RentalResult(daysRented, charge, point);
+	}
+
 }

@@ -48,16 +48,14 @@ public class Customer {
 		int totalPoint = 0;
 
 		for (Rental each : rentals) {
-			int daysRented = each.getRented();
-			double eachCharge = each.getCarge(daysRented);
-			int eachPoint = each.getPoint(daysRented);
+			RentalResult rentalResult = each.getRentalResult();
 
-			result += "\t" + each.getVideo().getTitle() + "\tDays rented: " + daysRented + "\tCharge: " + eachCharge
-					+ "\tPoint: " + eachPoint + "\n";
+			result += "\t" + each.getVideo().getTitle() + "\tDays rented: " + rentalResult.getDaysRented() + "\tCharge: " + rentalResult.getCharge()
+					+ "\tPoint: " + rentalResult.getPoint() + "\n";
 
-			totalCharge += eachCharge;
+			totalCharge += rentalResult.getCharge();
 
-			totalPoint += eachPoint ;
+			totalPoint += rentalResult.getPoint() ;
 		}
 
 		result += "Total charge: " + totalCharge + "\tTotal Point:" + totalPoint + "\n";
