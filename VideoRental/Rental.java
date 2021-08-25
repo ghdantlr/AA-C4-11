@@ -48,14 +48,8 @@ public class Rental {
 
 	public int getDaysRentedLimit() {
 		int limit = 0 ;
-		int daysRented ;
-		if (getStatus() == RentStatus.RETURN) { // returned Video
-			long diff = returnDate.getTime() - rentDate.getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-		} else { // not yet returned
-			long diff = new Date().getTime() - rentDate.getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-		}
+		int daysRented = getRented();
+
 		if ( daysRented <= 2) return limit ;
 
 		limit = video.getRentedLimit();
@@ -64,15 +58,19 @@ public class Rental {
 
 	public int getRented() {
 		int daysRented = 0;
+		long diff;
 
 		if (getStatus() == RentStatus.RETURN) { // returned Video
-			long diff = getReturnDate().getTime() - getRentDate().getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+			diff = getReturnDate().getTime() - getRentDate().getTime();
 		} else { // not yet returned
-			long diff = new Date().getTime() - getRentDate().getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+			diff = new Date().getTime() - getRentDate().getTime();
 		}
+		daysRented = calcDiff(diff);
 		return daysRented;
+	}
+
+	private int calcDiff(long diff) {
+		return (int) (diff / (1000 * 60 * 60 * 24)) + 1;
 	}
 
 	public double getCarge(int daysRented) {
