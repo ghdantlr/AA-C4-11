@@ -7,9 +7,7 @@ public class Customer {
 
 	private List<Rental> rentals = new ArrayList<Rental>();
 
-	public Customer(String name) {
-		this.setName(name);
-	}
+	public Customer(String name) { this.setName(name);	}
 
 	public String getName() {
 		return name;
@@ -29,7 +27,17 @@ public class Customer {
 
 	public void addRental(Rental rental) {
 		rentals.add(rental);
+	}
 
+	public Rental getRental(String videoTitle){
+		Rental foundRental = null;
+		for ( Rental rental: rentals ) {
+			if ( rental.getVideo().getTitle().equals(videoTitle)) {
+				foundRental = rental;
+				break;
+			}
+		}
+		return foundRental;
 	}
 
 	public String getReport() {

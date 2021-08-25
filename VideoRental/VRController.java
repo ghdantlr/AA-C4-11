@@ -9,16 +9,20 @@ public class VRController {
         this.model = model;
     }
 
+    private void printClearedRentalInfo(Customer customer){
+        System.out.println("Name: " + customer.getName() +
+                "\tRentals: " + customer.getRentals().size());
+        for (Rental rental : customer.getRentals()) {
+            System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ");
+            System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode());
+        }
+    }
+
     public boolean clearRentals(String customerName) {
         Customer foundCustomer = model.findCustomer(customerName) ;
         if (foundCustomer == null) return false;
 
-        System.out.println("Name: " + foundCustomer.getName() +
-                "\tRentals: " + foundCustomer.getRentals().size());
-        for (Rental rental : foundCustomer.getRentals()) {
-            System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ");
-            System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode());
-        }
+        printClearedRentalInfo(foundCustomer);
 
         List<Rental> rentals = new ArrayList<Rental>();
         foundCustomer.setRentals(rentals);
@@ -29,14 +33,10 @@ public class VRController {
         Customer foundCustomer = model.findCustomer(customerName) ;
         if ( foundCustomer == null ) return;
 
-        List<Rental> customerRentals = foundCustomer.getRentals() ;
-        for ( Rental rental: customerRentals ) {
-            if ( rental.getVideo().getTitle().equals(videoTitle) && rental.getVideo().isRented() ) {
-                rental.returnVideo();
-                rental.getVideo().setRented(false);
-                break ;
-            }
-        }
+        Rental foundCustomerRental = foundCustomer.getRental(videoTitle) ;
+        if (foundCustomerRental == null) return;
+
+        foundCustomerRental.returnVideo();
     }
 
     public void rentVideo(String customerName, String videoTitle) {
