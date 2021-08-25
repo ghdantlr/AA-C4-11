@@ -1,13 +1,15 @@
 import java.util.Date;
 
-public class Video {
+public abstract class Video {
 	private String title ;
 
 	private int priceCode ;
 	public static final int REGULAR = 1 ;
 	public static final int NEW_RELEASE =2 ;
 
-	private int videoType ;
+	protected int videoType ;
+	protected int penalty = 0;
+	protected int rentedLimit = 0;
 	public static final int VHS = 1 ;
 	public static final int CD = 2 ;
 	public static final int DVD = 3 ;
@@ -22,15 +24,17 @@ public class Video {
 		this.registeredDate = registeredDate ;
 	}
 
+	public abstract void setPenalty();
+	public abstract void setEachRentedLimit();
+
 	public int getLateReturnPointPenalty() {
-		int pentalty = 0 ;
-		switch ( videoType ) {
-			case VHS: pentalty = 1 ; break ;
-			case CD: pentalty = 2 ; break ;
-			case DVD: pentalty = 3 ; break ;
-		}
-		return pentalty ;
+		return penalty;
 	}
+
+	public int getRentedLimit() {
+		return rentedLimit;
+	}
+
 	public int getPriceCode() {
 		return priceCode;
 	}
